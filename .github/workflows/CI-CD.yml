@@ -7,6 +7,8 @@ on:
     # Workflow draait alleen bij push naar main
     pull_request:
     # Workflow draait ook bij pull requests (voor CI checks)
+    workflow_dispatch:
+    # Workflow kan ook manueel getriggerd worden
 
 permissions:
   pages: write
