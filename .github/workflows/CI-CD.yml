@@ -1,0 +1,52 @@
+name: CI-CD
+# Naam van de workflow zoals zichtbaar in GitHub Actions
+
+on:
+  push:
+    branches: [main]
+    # Workflow draait alleen bij push naar main
+    pull_request:
+    # Workflow draait ook bij pull requests (voor CI checks)
+
+permissions:
+  pages: write
+  # Nodig om GitHub Pages te mogen deployen
+  id-token: write
+  # Nodig voor veilige authenticatie van Pages deployment
+
+jobs:
+  build-deploy:
+    # Eén job die zowel test, build als deploy doet
+
+    runs-on: ubuntu-latest
+    # GitHub VM (Linux omgeving) waar alles op draait
+
+    container:
+      image: node:20
+      # Docker container met Node 20 voor consistente omgeving
+
+    steps:
+
+      - uses: actions/checkout@v4
+        # Haalt de repository code op naar de runner
+
+      - run: npm ci
+        # Installeert dependencies exact zoals in package-lock.json
+
+      - run: npm test
+        # Draait unit tests (Vitest)
+        # Als tests falen stopt de pipeline hier
+
+      - run: npm run build
+        # Bouwt de Vite app naar productie (dist/ folder)
+
+      - uses: actions/upload-pages-artifact@v3
+        # Pakt de build output en maakt er een Pages artifact van
+
+        with:
+          path: dist
+          # Map die wordt geüpload (output van Vite build)
+
+      - uses: actions/deploy-pages@v4
+        # Deployt het artifact naar GitHub Pages
+        # Website wordt hier live gezet
