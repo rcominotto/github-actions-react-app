@@ -5,12 +5,11 @@ on:
   push:
     branches: [master]
     # Workflow draait alleen bij push naar main
-    pull_request:
-    # Workflow draait ook bij pull requests (voor CI checks)
-    workflow_dispatch:
-    # Workflow kan ook manueel getriggerd worden
+  workflow_dispatch:
+  # Workflow kan ook manueel getriggerd worden
 
 permissions:
+  contents: read
   pages: write
   # Nodig om GitHub Pages te mogen deployen
   id-token: write
