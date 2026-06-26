@@ -3,7 +3,7 @@ name: CI-CD
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     # Workflow draait alleen bij push naar main
     pull_request:
     # Workflow draait ook bij pull requests (voor CI checks)
